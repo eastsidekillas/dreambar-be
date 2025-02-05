@@ -1,0 +1,65 @@
+version: "3.9"
+
+x-common-variables: &common-variables
+  DJANGO_SECRET_KEY:
+  DEBUG:
+  PUBLIC_HOST:
+  DATABASE_ENGINE: django.db.backends.postgresql
+  DATABASE_NAME: dreambar
+  DATABASE_USER: dreambar
+  DATABASE_PASSWORD: dreambar
+  DATABASE_HOST: postgres
+  DATABASE_PORT: 5432
+  STATIC_ROOT: /app/static
+  MEDIA_ROOT: /app/media
+  MEDIA_URL: media/
+
+services:
+  app:
+    build: .
+    env_file: .env
+    environment: *common-variables
+    volumes:
+      - media:/app/media
+    depends_on:
+      - postgres
+      - migration
+  collectstatic:
+    build: .
+    user: root
+    env_file: .env
+    environment: *common-variables
+    volumes:
+      - static:/app/static
+    command: ["/app/.venv/bin/python", "-m", "manage", "collectstatic", "--no-input"]
+  migration:
+    build: .
+    env_file: .env
+    environment: *common-variables
+    command: ["/app/.venv/bin/python", "-m", "manage", "migrate", "--no-input"]
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: dreambar
+      POSTGRES_PASSWORD: dreambar
+      POSTGRES_DB: dreambar
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  frontend:
+    build: ../dreambar-fe
+    volumes:
+      - static:/app/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      - collectstatic
+      - app
+
+volumes:
+  postgres_data:
+  static:
+  media:

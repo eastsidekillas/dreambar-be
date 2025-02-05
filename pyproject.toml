@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "dreambar-be"
+version = "0.1.0"
+description = "DreamBar site"
+authors = ["Timofey Tsepennikov <tta@biznpro.ru>"]
+license = "Private"
+readme = "README.md"
+packages = [{include = "*", from="src"}]
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+django = "^5.1.5"
+djangorestframework = "^3.15.2"
+djangorestframework-simplejwt = "^5.4.0"
+django-cors-headers = "^4.6.0"
+pillow = "^11.1.0"
+psycopg2 = "^2.9.10"
+requests = "^2.32.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
