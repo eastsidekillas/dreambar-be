@@ -13,7 +13,7 @@ from .serializers import EventSerializer
 class EventListView(APIView):
     def get(self, request):
         events = Event.objects.filter(status='published')
-        serializer = EventSerializer(events, many=True)
+        serializer = EventSerializer(events, many=True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -21,7 +21,7 @@ class EventDetailView(APIView):
     def get(self, request, slug):
         try:
             event = Event.objects.get(slug=slug, status='published')
-            serializer = EventSerializer(event)
+            serializer = EventSerializer(event, context={'request': request})
             return Response(serializer.data)
         except Event.DoesNotExist:
             return Response({'error': 'Событие не загрузилось или не published'}, status=status.HTTP_404_NOT_FOUND)
