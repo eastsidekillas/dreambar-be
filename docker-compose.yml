@@ -53,8 +53,9 @@ services:
     build: ../dreambar-fe
     volumes:
       - static:/app/static
+      - media:/app/media
     ports:
-      - "8000:8000"
+      - "80:80"
     depends_on:
       - collectstatic
       - app

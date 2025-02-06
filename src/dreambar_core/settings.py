@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 
-ALLOWED_HOSTS = ['http://localhost:4200', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['http://localhost:4200', 'localhost', '127.0.0.1', '192.168.0.240', 'docker-1.hosting.eastrust.ru']
 if os.getenv('PUBLIC_HOST'):
     ALLOWED_HOSTS.append(os.environ['PUBLIC_HOST'])
     CSRF_TRUSTED_ORIGINS = [os.environ['PUBLIC_HOST']]
