@@ -11,7 +11,7 @@ def create_superuser(apps, schema_editor):
     if not User.objects.filter(is_superuser=True).exists():
         try:
             User.objects.create(
-                email='admin@barderam.ru',
+                email='admin@bardream.ru',
                 is_staff=True,
                 is_superuser=True,
                 password=make_password('G1vWoTAYSd'),  # Используем make_password для хэширования
